@@ -1,0 +1,17 @@
+<title>Log in</title>
+<h1>Log in</h1>
+
+<div>
+<%= form_for(:session, url: sessions_path) do |f| %>
+
+  <%= f.label :username %>
+  <%= f.text_field :username %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.submit "Log in", class: "btn btn-large btn-primary" %>
+<% end %>
+
+<p>New Employee? <%= link_to "Add Employee", add_worker_path %></p>
+</div>

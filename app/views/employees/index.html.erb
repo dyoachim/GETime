@@ -1,0 +1,16 @@
+<% content_for :title, @title %>
+<h1>All employees</h1>
+
+<ul class = "employees">
+  <% @employees.each do |employee| %>
+    <li>
+      <%= link_to employee.name, employee %>
+      <% if current_employee.manager? && !current_employee?(employee) %>
+    | <%= link_to "delete", employee, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+  <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

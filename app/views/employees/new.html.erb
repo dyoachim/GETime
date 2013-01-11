@@ -1,0 +1,23 @@
+<title>Add New Worker</title>
+<h1>Add New Worker</h1>
+<p>Find me in app/views/employees/new.html.erb</p>
+
+<div>
+    <%= form_for(@employee) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.submit "Create account", class: "btn btn-large btn-primary" %>
+    <% end %>
+</div>

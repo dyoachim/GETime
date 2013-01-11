@@ -1,0 +1,14 @@
+<% content_for :title, @employee.name %>
+
+<h1><%= @employee.name %></h1>
+<p><%= @employee.username %></p>
+
+<div>
+<% if @employee.timesheets.any? %>
+  <h3>Timesheets (<%= @employee.timesheets.count %>)</h3>
+  <ol>
+    <%= render @timesheets %>
+  </ol>
+  <%= will_paginate @timesheets %>
+<% end %>
+</div>
