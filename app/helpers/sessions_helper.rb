@@ -23,6 +23,13 @@ module SessionsHelper
     employee == current_employee
   end
 
+  def logged_in_employee
+    unless logged_in?
+      store_location
+      redirect_to login_url, notice: "Please log in."
+    end
+  end
+
   def log_out
     cookies.delete(:remember_token)
     current_employee = nil

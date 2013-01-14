@@ -3,6 +3,13 @@
 <h1><%= @employee.name %></h1>
 <p><%= @employee.username %></p>
 
+<% if @employee.clocked_in? %>
+	<%= button_to "Clock Out", :controller => "timesheets", :method => :post, :action => "update" %>
+<% else %>
+	<%= button_to "Clock In", :controller => "timesheets", :action => "create" %>
+<% end %>
+
+
 <div>
 <% if @employee.timesheets.any? %>
   <h3>Timesheets (<%= @employee.timesheets.count %>)</h3>

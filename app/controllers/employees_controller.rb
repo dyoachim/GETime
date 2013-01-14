@@ -51,13 +51,6 @@ class EmployeesController < ApplicationController
   end
 
   private
-    def logged_in_employee
-      unless logged_in?
-        store_location
-        redirect_to login_url, notice: "Please log in."
-      end
-    end
-
     def correct_employee
       @employee = Employee.find(params[:id])
       redirect_to(root_path) unless current_employee?(@employee)
