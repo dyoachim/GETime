@@ -28,16 +28,16 @@ describe "Authentication" do
 
     describe "with valid information" do
       let(:employee) { FactoryGirl.create(:employee) }
-        before { log_in employee }
+      before { log_in employee }
 
       it { should have_selector('title', text: employee.name) }
       
       it { should have_link('Employees',    href: employees_path) }
-        it { should have_link('Account',  href: employee_path(employee)) }
+      it { should have_link('Account',  href: employee_path(employee)) }
       it { should have_link('Settings', href: edit_employee_path(employee)) }
       it { should have_link('Log out', href: logout_path) }
 
-       it { should_not have_link('Log in', href: login_path) }
+      it { should_not have_link('Log in', href: login_path) }
         
       describe "followed by logout" do
         before { click_link "Log out" }

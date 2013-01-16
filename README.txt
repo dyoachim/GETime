@@ -33,15 +33,5 @@ _____________________________________________
 
 NOTES:
 
-Failing Rspec tests on should_have input fields currently fail.
-	1) EmployeesController GET 'new' should have a name field
-	2) EmployeesController GET 'new' should have a username field
-	3) EmployeesController GET 'new' should have a password field
-	4) EmployeesController GET 'new' should have a password confirmation field
-
-This is potentially due to an error in Rspec 2.x, and is being looked into.
-http://www.rubyfocus.biz/blog/2011/01/08/from_have_tag_to_have_selector_in_rspec2_gotchas.html
-
-
 Special Thanks to Mike Hartl's Ruby on Rails Tutorial. Much of the code borrows from his superb craftmanship and guidance.
 http://ruby.railstutorial.org/

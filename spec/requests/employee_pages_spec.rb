@@ -132,9 +132,9 @@ describe "Employee pages" do
       let(:new_username) { "new username" }
       before do
         fill_in "Name",             with: new_name
-        fill_in "Username",            with: new_username
+        fill_in "Username",         with: new_username
         fill_in "Password",         with: employee.password
-        fill_in 'confirm', with: employee.password
+        fill_in 'confirm',          with: employee.password
         click_button "Save changes"
       end
 

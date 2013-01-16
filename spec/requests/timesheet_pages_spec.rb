@@ -5,7 +5,7 @@ describe "Timesheet pages" do
   subject { page }
 
   let(:employee) { FactoryGirl.create(:employee) }
-  before { logged_in employee }
+  before { log_in employee }
 
   describe "timesheet creation" do
     before { visit employees_path }
@@ -13,23 +13,39 @@ describe "Timesheet pages" do
     describe "with invalid information" do
 
       it "should not create a timesheet" do
-        expect { click_button "Post" }.not_to change(Timesheet, :count)
+        expect { find('id#clock_in_tester').click }.not_to change(Timesheet, :count)
       end
 
       describe "error messages" do
-        before { click_button "Post" }
+        before { find('id#clock_in_tester').click }
         it { should have_content('error') } 
       end
     end
 
     describe "with valid information" do
       it "should create a timesheet" do
-        expect { click_button "Clock In" }.to change(Timesheet, :count).by(1)
+        expect { find('id#clock_in_tester').click }.to change(Timesheet, :count).by(1)
       end
     end
   end
 
   describe "timesheet punch out" do
-    #pending
+      describe "with invalid information" do
+
+      it "should not update a timesheet" do
+        expect { click_button "Clock Out",  timesheet.reload.punch_out.should  == nil }
+      end
+
+      describe "error messages" do
+        before { find('id#clock_out_tester').click }
+        it { should have_content('error') } 
+      end
+    end
+
+    describe "with valid information" do
+      it "should update a timesheet" do
+        expect { click_button "Clock Out",  timesheet.reload.punch_out.should  == DateTime.now }
+      end
+    end
   end
 end
