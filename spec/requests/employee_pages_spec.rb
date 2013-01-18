@@ -60,12 +60,9 @@ describe "Employee pages" do
 
     it { should have_selector('h1',    text: employee.name) }
     it { should have_selector("title", text: employee.name) }
-
-    describe "timesheets" do
-      it { should have_content(t1.punch_in) }
-      it { should have_content(t2.punch_in) }
-      it { should have_content(employee.timesheets.count) }
-    end
+    it { should have_content(t1.punch_in) }
+    it { should have_content(t2.punch_in) }
+    it { should have_content(employee.timesheets.count) }
   end
 
   describe "add worker page" do 

@@ -2,12 +2,9 @@ require 'spec_helper'
 
 describe Employee do
 
-  before do
-    @employee = Employee.new(name: "Jean-Luc Picard", username: "CaptBaldy",
-    						password: "mainscreenon", password_confirmation: "mainscreenon")
-  end
+  let(:employee) { FactoryGirl.create(:employee) }
 
-  subject { @employee }
+  subject { employee }
 
   it { should respond_to(:name) }
   it { should respond_to(:username) }
@@ -24,56 +21,57 @@ describe Employee do
   it { should_not be_manager }
 
 	describe "when name is not present" do
-		before { @employee.name = " " }
-		it { should_not be_valid }
-	end
-
-	describe "when name is too long" do 
-		before {@employee.name = "a" * 41}
+		before { employee.name = " " }
 		it { should_not be_valid }
 	end
 
 	describe "when username is not present" do
-		before { @employee.username = " " }
+		before { employee.username = " " }
 		it { should_not be_valid }
+	end
+
+	describe "when password is not present" do
+		before { employee.password = employee.password_confirmation = " " }
+		it { should_not be_valid }
+	end
+
+	describe "when name is too long" do 
+		before {employee.name = "a" * 41}
+		it { should_not be_valid }
+	end
+
+	describe "password is too short" do
+		before {employee.password = employee.password_confirmation = "a" * 5}
+		it { should be_invalid }
 	end
 
 	describe "when username is not unique" do
 		before do
-			same_username = @employee.dup
-			same_username.username = @employee.username.upcase
+			same_username = employee.dup
+			same_username.username = employee.username.upcase
 			same_username.save
 		end
 		it { should_not be_valid }
 	end
 
-	describe "when password is not present" do
-		before { @employee.password = @employee.password_confirmation = " " }
-		it { should_not be_valid }
-	end
 
 	describe "when password confirmation is nil" do
-		before { @employee.password_confirmation = nil }
+		before { employee.password_confirmation = nil }
 		it { should_not be_valid }
-	end
-
-	describe "password is too short" do
-		before {@employee.password = @employee.password_confirmation = "a" * 5}
-		it { should be_invalid }
 	end
 
 	describe "when password doesn't match password confirmation" do
-		before { @employee.password_confirmation = "incorrect" }
+		before { employee.password_confirmation = "incorrect" }
 		it { should_not be_valid }
 	end
 
 	describe "return value of authenticate method" do
-		before { @employee.save }
-		let(:found_employee) { Employee.find_by_username(@employee.username) }
+		before { employee.save }
+		let(:found_employee) { Employee.find_by_username(employee.username) }
 
 
 		describe "with valid password" do
-	    	it { should == found_employee.authenticate(@employee.password) }
+	    	it { should == found_employee.authenticate(employee.password) }
 	  	end
 
 	  	describe "with invalid password" do
@@ -85,14 +83,14 @@ describe Employee do
 	end
 
   	describe "remember token" do
-    	before { @employee.save }
+    	before { employee.save }
     	its(:remember_token) { should_not be_blank }
     end
 
 	describe "with manager attribute set to 'true'" do
     	before do
-      	@employee.save!
-      	@employee.toggle!(:manager)
+      	employee.save!
+      	employee.toggle!(:manager)
     	end
 
     	it { should be_manager }
@@ -100,21 +98,21 @@ describe Employee do
 
   	describe "timesheets associations" do
 
-    	before { @employee.save }
+    	before { employee.save }
     	let!(:older_timesheet) do 
-      		FactoryGirl.create(:timesheet, employee: @employee, punch_in: DateTime.yesterday, created_at: 1.day.ago)
+      		FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.yesterday, created_at: 1.day.ago)
     	end
     	let!(:newer_timesheet) do
-     	 	FactoryGirl.create(:timesheet, employee: @employee, punch_in: DateTime.now - 1.hour, created_at: 1.hour.ago)
+     	 	FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now - 1.hour, created_at: 1.hour.ago)
     	end
 
     	it "should have the right microposts in the right order" do
-      		@employee.timesheets.should == [newer_timesheet, older_timesheet]
+      		employee.timesheets.should == [newer_timesheet, older_timesheet]
     	end
 
     	it "should destroy associated timesheets" do
-      		timesheets = @employee.timesheets.dup
-      		@employee.destroy
+      		timesheets = employee.timesheets.dup
+      		employee.destroy
       		timesheets.should_not be_empty
       		timesheets.each do |timesheet|
         		Timesheet.find_by_id(timesheet.id).should be_nil
