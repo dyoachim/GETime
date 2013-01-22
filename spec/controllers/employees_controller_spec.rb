@@ -36,13 +36,13 @@ describe EmployeesController do
 
   describe "GET 'new'" do
 
-    it "should have a input fields" do
-      get :new
+    it "should have a input fields", :type => :feature do
+      visit add_worker_path
       response.should be_success
-      response.should have_selector("input[name='employee[name]'][type='text']")
-      response.should have_selector("input[name='employee[username]'][type='text']")
-      response.should have_selector("input[name='employee[password]'][type='password']")
-      response.should have_selector("input[name='employee[password_confirmation]'][type='password']")
+      page.should have_selector("input[name='employee[name]'][type='text']")
+      page.should have_selector("input[name='employee[username]'][type='text']")
+      page.should have_selector("input[name='employee[password]'][type='password']")
+      page.should have_selector("input[name='employee[password_confirmation]'][type='password']")
     end
   end
 

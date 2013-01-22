@@ -47,11 +47,11 @@ describe Employee do
 
 	describe "when username is not unique" do
 		before do
-			same_username = employee.dup
-			same_username.username = employee.username.upcase
-			same_username.save
+			@same_username = employee.dup
+			@same_username.username = employee.username.upcase
+			@same_username.save
 		end
-		it { should_not be_valid }
+		it { @same_username.should_not be_valid }
 	end
 
 
@@ -66,10 +66,10 @@ describe Employee do
 	end
 
 	describe "return value of authenticate method" do
-		before { employee.save }
 		let(:found_employee) { Employee.find_by_username(employee.username) }
 
-
+		before { employee.save }
+		
 		describe "with valid password" do
 	    	it { should == found_employee.authenticate(employee.password) }
 	  	end

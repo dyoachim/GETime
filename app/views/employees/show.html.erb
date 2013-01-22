@@ -4,7 +4,7 @@
 <p><%= @employee.username %></p>
 
 <% if @employee.clocked_in? %>
-	<%= button_to "Clock Out",:id => "clock_out_tester", :controller => "timesheets", :method => :post, :action => "update" %>
+	<%= button_to "Clock Out",:id => "clock_out_tester", :controller => "timesheets", :method => :put, :action => "update" %>
 <% else %>
 	<%= button_to "Clock In",:id => "clock_in_tester", :controller => "timesheets", :action => "create" %>
 <% end %>

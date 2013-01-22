@@ -1,7 +1,7 @@
 GEtime::Application.routes.draw do
   resources :employees
   resources :sessions, only: [:new, :create, :destroy]
-  resources :timesheets, only: [:create]
+  resources :timesheets, only: [:create, :update]
 
   root to: 'employees#home'
 
