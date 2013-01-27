@@ -20,32 +20,32 @@ describe Employee do
   it { should be_valid }
   it { should_not be_manager }
 
-	describe "when name is not present" do
+	context "when name is not present" do
 		before { employee.name = " " }
 		it { should_not be_valid }
 	end
 
-	describe "when username is not present" do
+	context "when username is not present" do
 		before { employee.username = " " }
 		it { should_not be_valid }
 	end
 
-	describe "when password is not present" do
+	context "when password is not present" do
 		before { employee.password = employee.password_confirmation = " " }
 		it { should_not be_valid }
 	end
 
-	describe "when name is too long" do 
+	context "when name is too long" do 
 		before {employee.name = "a" * 41}
 		it { should_not be_valid }
 	end
 
-	describe "password is too short" do
+	context "when password is too short" do
 		before {employee.password = employee.password_confirmation = "a" * 5}
 		it { should be_invalid }
 	end
 
-	describe "when username is not unique" do
+	context "when username is not unique" do
 		before do
 			@same_username = employee.dup
 			@same_username.username = employee.username.upcase
@@ -55,12 +55,12 @@ describe Employee do
 	end
 
 
-	describe "when password confirmation is nil" do
+	context "when password confirmation is nil" do
 		before { employee.password_confirmation = nil }
 		it { should_not be_valid }
 	end
 
-	describe "when password doesn't match password confirmation" do
+	context "when password doesn't match password confirmation" do
 		before { employee.password_confirmation = "incorrect" }
 		it { should_not be_valid }
 	end
@@ -70,11 +70,11 @@ describe Employee do
 
 		before { employee.save }
 		
-		describe "with valid password" do
+		context "with valid password" do
 	    	it { should == found_employee.authenticate(employee.password) }
 	  	end
 
-	  	describe "with invalid password" do
+	  	context "with invalid password" do
 	    	let(:employee_for_invalid_password) { found_employee.authenticate("invalid") }
 
 	    	it { should_not == employee_for_invalid_password }
@@ -87,7 +87,7 @@ describe Employee do
     	its(:remember_token) { should_not be_blank }
     end
 
-	describe "with manager attribute set to 'true'" do
+	context "with manager attribute set to 'true'" do
     	before do
       	employee.save!
       	employee.toggle!(:manager)
@@ -99,15 +99,11 @@ describe Employee do
   	describe "timesheets associations" do
 
     	before { employee.save }
-    	let!(:older_timesheet) do 
-      		FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.yesterday, created_at: 1.day.ago)
-    	end
-    	let!(:newer_timesheet) do
-     	 	FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now - 1.hour, created_at: 1.hour.ago)
-    	end
+    	let!(:older_timesheet) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.yesterday, created_at: 1.day.ago) }
+    	let!(:newer_timesheet) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now - 1.hour, created_at: 1.hour.ago) }
 
-    	it "should have the right microposts in the right order" do
-      		employee.timesheets.should == [newer_timesheet, older_timesheet]
+    	context "with the right microposts in the right order" do
+      		it { employee.timesheets.should == [newer_timesheet, older_timesheet] }
     	end
 
     	it "should destroy associated timesheets" do

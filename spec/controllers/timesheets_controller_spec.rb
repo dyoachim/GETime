@@ -7,8 +7,8 @@ describe TimesheetsController do
 
   describe "timesheet creation" do
 
-    describe "when logged in with correct employee" do
-      it "should create a timesheet" do
+    context "when logged in with correct employee" do
+      it "creates a timesheet" do
         lambda do
           test_log_in(employee)
           post :create, :id => employee
@@ -17,8 +17,8 @@ describe TimesheetsController do
       end
     end
 
-    describe "when not logged in" do
-      it "should create a timesheet" do
+    context "when not logged in" do
+      it "does not create a timesheet" do
         lambda do
           post :create, :id => employee
           response.status.should == 302
@@ -28,11 +28,11 @@ describe TimesheetsController do
   end
 
   describe "timesheet punch out" do
-   let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => DateTime.now, :employee_id => employee) }
+    let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => DateTime.now, :employee_id => employee) }
 
-    describe "when logged in with correct employee" do
+    context "when logged in with correct employee" do
 
-      it "should update a timesheet" do
+      it "does update a timesheet" do
         lambda do
           test_log_in(employee)
           post :create, :id => timesheet.id
@@ -43,8 +43,8 @@ describe TimesheetsController do
       end
     end
     
-    describe "when not logged in" do
-      it "should not update a timesheet" do
+    context "when not logged in" do
+      it "does not update a timesheet" do
         lambda do
           post :create, :id => timesheet.id
           put :update, :id => timesheet.id

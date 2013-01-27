@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe "Employee pages" do
+
+  let(:employee) { FactoryGirl.create(:employee) }
   
   subject { page }
 
   describe "index" do
-
-    let(:employee) { FactoryGirl.create(:employee) }
 
     before(:each) do
       log_in employee
@@ -23,7 +23,7 @@ describe "Employee pages" do
 
       it { should have_selector('div.pagination') }
 
-      it "should list each employee" do
+      it "does list each employee" do
         Employee.paginate(page: 1).each do |employee|
           page.should have_selector('li', text: employee.name)
         end
@@ -34,7 +34,7 @@ describe "Employee pages" do
 
       it { should_not have_link('delete') }
 
-      describe "as a manager" do
+      context "when a manager" do
         let(:manager) { FactoryGirl.create(:manager) }
         before do
           log_in manager
@@ -51,12 +51,10 @@ describe "Employee pages" do
   end
 
   describe "account page" do
-    let(:employee) { FactoryGirl.create(:employee) }
     let!(:t1) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now, punch_out: (DateTime.now + 1.hour)) }
     let!(:t2) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.tomorrow, punch_out: (DateTime.tomorrow + 1.hour)) }
 
     before { visit employee_path(employee) }
-
 
     it { should have_selector('h1',    text: employee.name) }
     it { should have_selector("title", text: employee.name) }
@@ -78,13 +76,13 @@ describe "Employee pages" do
 
     let(:submit) { "Create account" }
 
-    describe "with invalid information" do
+    context "with invalid information" do
       it "should not create an employee" do
         expect { click_button submit }.not_to change(Employee, :count)
       end
     end
 
-    describe "with valid information" do
+    context "with valid information" do
 
       before do
         fill_in "Name",         with: "James Bond"
@@ -100,14 +98,13 @@ describe "Employee pages" do
         it { should have_link('Log out') }
       end
 
-      it "should create an employee" do
+      it "does create an employee" do
         expect { click_button submit }.to change(Employee, :count).by(1)
       end
     end
   end
 
   describe "edit" do
-    let(:employee) { FactoryGirl.create(:employee) }
     before do
       log_in employee
       visit edit_employee_path(employee)
@@ -118,13 +115,13 @@ describe "Employee pages" do
       it { should have_selector('title', text: "Edit account") }
     end
 
-    describe "with invalid information" do
+    context "with invalid information" do
       before { click_button "Save changes" }
 
       it { should have_content('error') }
     end
 
-    describe "with valid information" do
+    context "with valid information" do
       let(:new_name)  { "New Name" }
       let(:new_username) { "new username" }
       before do

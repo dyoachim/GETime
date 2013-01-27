@@ -1,8 +1,7 @@
 module SessionsHelper
 
   def log_in(employee)
-    cookies[:remember_token] = {value:   employee.remember_token,
-                             		expires: 5.minutes.from_now.utc}
+    cookies[:remember_token] = {value:   employee.remember_token, expires: 5.minutes.from_now.utc}
     current_employee = employee
     @current_employee = employee
   end

@@ -4,6 +4,8 @@ describe EmployeesController do
   render_views
 
   let(:employee) { FactoryGirl.create(:employee) }
+  let(:blank_employee_attributes) {{:name => "", :username => "", :password => "", :password_confirmation => "" }}
+  let(:valid_employee_attributes) {{ :name => "New Employee", :username => "employeeexample", :password => "foobar", :password_confirmation => "foobar" }}
 
   describe "GET 'index'" do
 
@@ -15,7 +17,7 @@ describe EmployeesController do
       end
     end
 
-    describe "for logged-in employees" do
+    context "when logged in" do
 
       it "should be successful" do
         test_log_in(employee)
@@ -27,7 +29,7 @@ describe EmployeesController do
 
   describe "GET 'show'" do
 
-    it "should be successful" do
+    it "does get successfully" do
       get :show, :id => employee
       response.should be_success
       assigns(:employee).should == employee
@@ -36,7 +38,7 @@ describe EmployeesController do
 
   describe "GET 'new'" do
 
-    it "should have a input fields", :type => :feature do
+    it "does have input fields", :type => :feature do
       visit add_worker_path
       response.should be_success
       page.should have_selector("input[name='employee[name]'][type='text']")
@@ -48,39 +50,30 @@ describe EmployeesController do
 
   describe "POST 'create'" do
 
-    describe "failure" do
+    context "when failure" do
 
-      before(:each) do
-        @attr = {:name => "", :username => "", :password => "", 
-                 :password_confirmation => "" }
-      end
-
-      it "should not create an employee" do
+      it "does not create an employee" do
         lambda do
-          post :create, :employee => @attr
+          post :create, :employee => blank_employee_attributes
         end.should_not change(Employee, :count)
       end
 
-      it "should render the 'new' page" do
-        post :create, :employee => @attr
+      it "does render the 'new' page" do
+        post :create, :employee => blank_employee_attributes
         response.should render_template('new')
       end
     end
 
-    describe "success" do
+    context "when success" do
 
-      before(:each) do
-        @attr = { :name => "New Employee", :username => "employeeexample", :password => "foobar", :password_confirmation => "foobar" }
-      end
-
-      it "should create an employee" do
+      it "does create an employee" do
         lambda do
-          post :create, :employee => @attr
+          post :create, :employee => valid_employee_attributes
         end.should change(Employee, :count).by(1)
       end
 
-      it "should redirect to the employee show page and log in" do
-        post :create, :employee => @attr
+      it "does redirect to the employee show page and log in" do
+        post :create, :employee => valid_employee_attributes
         response.should redirect_to(employee_path(assigns(:employee)))
         flash[:success].should =~ /New employee successfully added/i
         controller.should be_logged_in
@@ -90,7 +83,7 @@ describe EmployeesController do
 
   describe "GET 'edit'" do
 
-    it "should be successful" do
+    it "does get successfully" do
       test_log_in(employee)
       get :edit, :id => employee
       response.should be_success
@@ -99,32 +92,26 @@ describe EmployeesController do
 
   describe "PUT 'update'" do
 
-    before(:each) do
-      @employee = FactoryGirl.create(:employee)
-      test_log_in(@employee)
+    before(:each) do 
+      test_log_in(employee)
     end
 
-    describe "failure" do
+    context "when failure" do
 
-      @attr = { :name => "", :username => "", :password => "", :password_confirmation => "" }
-
-      it "should render the 'edit' page" do
-        put :update, :id => @employee, :employee => @attr
+      it "does render the 'edit' page" do
+        put :update, :id => employee, :employee => blank_employee_attributes
         response.should render_template('edit')
       end
     end
 
-    describe "success" do
+    context "when success" do
 
-      before { @attr = { :name => "New Name", :username => "newusername", 
-                  :password => "barbaz", :password_confirmation => "barbaz"} }
-
-      it "should change the employee's attributes" do
-        put :update, :id => @employee, :employee => @attr
-        @employee.reload
-        @employee.name.should  == @attr[:name]
-        @employee.username.should == @attr[:username]
-        response.should redirect_to(employee_path(@employee))
+      it "does change the employee's attributes" do
+        put :update, :id => employee, :employee => valid_employee_attributes
+        employee.reload
+        employee.name.should  == valid_employee_attributes[:name]
+        employee.username.should == valid_employee_attributes[:username]
+        response.should redirect_to(employee_path(employee))
         flash[:success].should =~ /updated/
       end
     end
@@ -132,29 +119,29 @@ describe EmployeesController do
 
   describe "authentication of edit/update pages" do
 
-    describe "for non-signed-in employees" do
+    context "when not logged in" do
       
-      it "should deny access to 'edit'" do
+      it "does deny access to 'edit'" do
         get :edit, :id => employee
         response.should redirect_to(login_path)
       end
 
-      it "should deny access to 'update'" do
+      it "does deny access to 'update'" do
         put :update, :id => employee, :employee => {}
         response.should redirect_to(login_path)
       end
     end
 
-    describe "for logged-in employees" do
+    context "when logged in" do
       let(:wrong_employee) { FactoryGirl.create(:employee, :username => "employeeexample") }
       before { test_log_in(wrong_employee) }
 
-      it "should require matching employees for 'edit'" do
+      it "does require matching employees for 'edit'" do
         get :edit, :id => employee
         response.should redirect_to(root_path)
       end
 
-      it "should require matching employees for 'update'" do
+      it "does require matching employees for 'update'" do
         put :update, :id => employee, :employee => {}
         response.should redirect_to(root_path)
       end
