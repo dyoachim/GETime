@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114211407) do
+ActiveRecord::Schema.define(:version => 20130130203927) do
 
   create_table "employees", :force => true do |t|
     t.string   "name"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130114211407) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "manager",         :default => false
-    t.boolean  "clocked_in"
+    t.boolean  "clocked_in",      :default => false
   end
 
   add_index "employees", ["remember_token"], :name => "index_employees_on_remember_token"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20130114211407) do
     t.integer  "employee_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "change_log"
   end
 
   add_index "timesheets", ["employee_id", "created_at"], :name => "index_timesheets_on_employee_id_and_created_at"

@@ -8,6 +8,7 @@ gem 'database_cleaner'
 gem 'factory_girl_rails', '4.1.0'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
+gem 'json', '1.7.6'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

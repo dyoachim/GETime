@@ -158,6 +158,7 @@ DEPENDENCIES
   factory_girl_rails (= 4.1.0)
   faker (= 1.0.1)
   jquery-rails
+  json (= 1.7.6)
   rails (= 3.2.6)
   rspec-rails (= 2.10.1)
   sass-rails (~> 3.2.3)

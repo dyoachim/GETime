@@ -5,5 +5,6 @@ FactoryGirl.define do
     punch_in ""
     punch_out ""
     employee_id 1
+    change_log ""
   end
 end
