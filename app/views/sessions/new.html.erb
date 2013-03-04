@@ -1,17 +1,19 @@
-<title>Log in</title>
-<h1>Log in</h1>
+<!DOCTYPE HTML>
+<html>
+	<title>Log in</title>
+	<div class="log_in_container">
+		<h1>Log in</h1>
+		<%= form_for(:session, url: sessions_path) do |f| %>
 
-<div>
-<%= form_for(:session, url: sessions_path) do |f| %>
+		  <%= f.label :username%>
+		  <%= f.text_field :username,:class=>"input-block-level", :placeholder=>"Username" %>
 
-  <%= f.label :username %>
-  <%= f.text_field :username %>
+		  <%= f.label :password %>
+		  <%= f.password_field :password,:class=>"input-block-level", :placeholder=>"Password" %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+		  <%= f.submit "Log in", class: "btn btn-large btn-primary" %>
+		<% end %>
 
-  <%= f.submit "Log in", class: "btn btn-large btn-primary" %>
-<% end %>
-
-<p>New Employee? <%= link_to "Add Employee", add_worker_path %></p>
-</div>
+		<p>New Employee? <%= link_to "Add Employee", add_worker_path %></p>
+	</div>
+</html>

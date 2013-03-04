@@ -1,16 +1,18 @@
 <% content_for :title, @employee.name %>
 
 <h1><%= @employee.name %></h1>
-<p><%= @employee.username %></p>
+<div class="user_info_container">
+	<p><%= @employee.username %></p>
 
-<% if @employee.clocked_in? %>
-	<%= button_to "Clock Out",:id => "clock_out_tester", :controller => "timesheets", :method => :put, :action => "update" %>
-<% else %>
-	<%= button_to "Clock In",:id => "clock_in_tester", :controller => "timesheets", :action => "create" %>
-<% end %>
+	<% if @employee.clocked_in? %>
+		<%= button_to "Clock Out",:id => "clock_out_tester", :controller => "timesheets", :method => :put, :action => "update" %>
+	<% else %>
+		<%= button_to "Clock In",:id => "clock_in_tester", :controller => "timesheets", :action => "create" %>
+	<% end %>
+</div>
 
 
-<div>
+<div class="timesheet_container">
 <% if @employee.timesheets.any? %>
   <h3>Timesheets (<%= @employee.timesheets.count %>)</h3>
   <ol>

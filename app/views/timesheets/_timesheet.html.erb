@@ -1,3 +1,4 @@
-<li>
-  <span>IN: <%= timesheet.punch_in %>________OUT: <%= timesheet.punch_out %>
+<li class="timesheet-display">
+  <span>In: <%= timesheet.punch_in.strftime("%I:%M%p %m/%d/%Y") %></span>
+  <span>Out: <%= timesheet.punch_out %></span>
 </li>

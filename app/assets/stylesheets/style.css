@@ -1,0 +1,53 @@
+h1 {
+	text-align: center;
+}
+
+.log_in_container {
+	margin: 0 auto;
+	width: 400px;
+}
+
+.edit_info_container {
+	margin: 0 auto;
+	width: 400px;
+}
+
+.user_info_container {
+	margin: 0 auto;
+	width: 400px;
+	text-align: center;
+}
+
+.timesheet_container {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.employees li {
+	text-align: center;
+	margin: 12px 12px;
+	border-radius: 8px;
+	border-style: solid;
+	display: block;
+	font-size: 20px;
+	padding: 15px 0px 15px;
+}
+
+.timesheet-display span {
+	margin: 0 auto;
+	width: 600px;
+	text-align: center;
+	margin: 12px 12px;
+	border-radius: 8px;
+	border-style: solid;
+	display: block;
+	font-size: 20px;
+	padding: 15px 0px 15px;
+}
+
+section {
+	-moz-box-sizing:border-box;
+	-webkit-bot-sizing:border-box;
+	box-sizing:border-box; /*sets max width, accomodates padding, old style from IE*/
+	padding:15px;
+}
