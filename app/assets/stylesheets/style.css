@@ -20,29 +20,47 @@ h1 {
 
 .timesheet_container {
 	margin: 0 auto;
+	width: 600px;
 	text-align: center;
+	font-size: 18px;
 }
 
-.employees li {
-	text-align: center;
-	margin: 12px 12px;
-	border-radius: 8px;
-	border-style: solid;
-	display: block;
-	font-size: 20px;
-	padding: 15px 0px 15px;
+.employees_container {
+	margin: 0 auto;
+	width:66.6%;
 }
 
-.timesheet-display span {
+#employees_list {
+	list-style: none;
+}
+
+.employees_display {
+	font-size: 18px;
+	display: table;
+	list-style: none;
+}
+
+.timesheet_display span {
+	display: inline;
 	margin: 0 auto;
 	width: 600px;
 	text-align: center;
-	margin: 12px 12px;
+	margin: 0px 12px;
 	border-radius: 8px;
 	border-style: solid;
-	display: block;
 	font-size: 20px;
 	padding: 15px 0px 15px;
+	display: table;
+}
+
+.pagination {
+	clear:both;
+	text-decoration: none;
+	background-color: #ffffff;
+	margin:0px;
+	padding-bottom:20px;
+	font-size:18px;
+	text-align:center;
 }
 
 section {

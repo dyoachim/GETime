@@ -1,8 +1,7 @@
 <title>Add New Worker</title>
 <h1>Add New Worker</h1>
-<p>Find me in app/views/employees/new.html.erb</p>
 
-<div>
+<div class="log_in_container">
     <%= form_for(@employee) do |f| %>
       <%= render 'shared/error_messages' %>
 
@@ -18,6 +17,7 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
 
+    </br>
       <%= f.submit "Create account", class: "btn btn-large btn-primary" %>
     <% end %>
 </div>

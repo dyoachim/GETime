@@ -13,11 +13,13 @@
 
 
 <div class="timesheet_container">
-<% if @employee.timesheets.any? %>
-  <h3>Timesheets (<%= @employee.timesheets.count %>)</h3>
-  <ol>
-    <%= render @timesheets %>
-  </ol>
-  <%= will_paginate @timesheets %>
-<% end %>
+	<table class="table table-striped">
+		<% if @employee.timesheets.any? %>
+		  <h3>Timesheets (<%= @employee.timesheets.count %>)</h3>
+		  <ol>
+		    <%= render @timesheets %>
+		  </ol>
+		  <%= will_paginate @timesheets %>
+		<% end %>
+	</table>
 </div>
