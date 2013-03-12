@@ -1,4 +1,4 @@
 <tr class="row">
-	<td>In: <%= timesheet.punch_in.strftime("%I:%M%p %m/%d/%Y") %></td>
-	<td>Out: <%= timesheet.punch_out %></td>
+	<td class="span4"><%= timesheet.punch_in.strftime("%-I:%M%P, %b %d/%y") %></td>
+	<td class="span4"><%= timesheet.punch_out.strftime("%-I:%M%P, %b %d/%y") %></td>
 </tr>

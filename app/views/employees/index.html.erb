@@ -11,7 +11,7 @@
       		</div>
       		<% if current_employee.manager? && !current_employee?(employee) %>
      			<%= button_to "delete", employee, method: :delete, :class => "btn btn-danger",
-                                  data: { confirm: "You sure?" } %>
+                                  data: { confirm: "This action cannot be reversed. Delete employee?" } %>
         </pre>
  			<% end %>
     </li>

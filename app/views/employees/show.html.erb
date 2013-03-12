@@ -2,24 +2,29 @@
 
 <h1><%= @employee.name %></h1>
 <div class="user_info_container">
-	<p><%= @employee.username %></p>
-
-	<% if @employee.clocked_in? %>
+	<% if @employee.clocked_in? && current_employee?(@employee) %>
 		<%= button_to "Clock Out",:id => "clock_out_tester", :controller => "timesheets", :method => :put, :action => "update" %>
-	<% else %>
+	<% elsif current_employee?(@employee) %>
 		<%= button_to "Clock In",:id => "clock_in_tester", :controller => "timesheets", :action => "create" %>
 	<% end %>
 </div>
 
 
-<div class="timesheet_container">
-	<table class="table table-striped">
-		<% if @employee.timesheets.any? %>
-		  <h3>Timesheets (<%= @employee.timesheets.count %>)</h3>
+<div class="row-fluid">
+		<% if @employee.timesheets.any? && (current_employee?(@employee) || current_employee.manager?) %>
 		  <ol>
-		    <%= render @timesheets %>
+		  	<table class="table table-striped">
+		  		<caption><h3>Timesheets (<%= @employee.timesheets.count %>)</h3></caption>
+		  		<tr class="row">
+		  			<td><strong>In</strong></td><td><strong>Out</strong></td>
+		    		<%= render @timesheets %>
+		    	</tr>
+			</table>
 		  </ol>
 		  <%= will_paginate @timesheets %>
+		<% else %>
+			</br>
+			<span class="alert alert-block">You are not authorised to view this information.</span>
 		<% end %>
-	</table>
+
 </div>
