@@ -9,22 +9,21 @@
 	<% end %>
 </div>
 
+</br>
 
 <div class="row-fluid">
-		<% if @employee.timesheets.any? && (current_employee?(@employee) || current_employee.manager?) %>
-		  <ol>
-		  	<table class="table table-striped">
-		  		<caption><h3>Timesheets (<%= @employee.timesheets.count %>)</h3></caption>
-		  		<tr class="row">
-		  			<td><strong>In</strong></td><td><strong>Out</strong></td>
-		    		<%= render @timesheets %>
-		    	</tr>
-			</table>
-		  </ol>
-		  <%= will_paginate @timesheets %>
-		<% else %>
-			</br>
-			<span class="alert alert-block">You are not authorised to view this information.</span>
-		<% end %>
+	<% unless current_employee?(@employee) || current_employee.manager? %>
+		<div class="text-center"><span class="alert alert-block">You are not authorised to view this information.</span></div>
+	<% end %>
 
+	<% if @employee.timesheets.any? && (current_employee?(@employee) || current_employee.manager?) %>	
+	  	<table class="table table-striped">
+	  		<caption><h3>Timesheets (<%= @employee.timesheets.count %>)</h3></caption>
+	  		<tr class="row">
+	  			<td><strong>In</strong></td><td><strong>Out</strong></td>
+	    		<%= render @timesheets %>
+	    	</tr>
+		</table>
+		<%= will_paginate @timesheets %>
+	<% end %>
 </div>

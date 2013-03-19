@@ -2,21 +2,20 @@
 <h1>All employees</h1>
 
 <div class="employees_container">
-<ul>
-  <% @employees.each do |employee| %>
-    <li class="span4" id="employees_list">
-    	<pre>
-    		<div class="employees_display">
-      			<%= link_to employee.name, employee %>
+  <ul>
+    <% @employees.each do |employee| %>
+      <li class="span4" id="employees_list">
+    	  <pre>
+    		  <div class="employees_display">
+      		  <%= link_to employee.name, employee %>
       		</div>
-      		<% if current_employee.manager? && !current_employee?(employee) %>
-     			<%= button_to "delete", employee, method: :delete, :class => "btn btn-danger",
-                                  data: { confirm: "This action cannot be reversed. Delete employee?" } %>
+      	  <% if current_employee.manager? && !current_employee?(employee) %>
+     			  <%= button_to "delete", employee, method: :delete, :class => "btn btn-danger", data: { confirm: "This action cannot be reversed. Delete employee?" } %>
+          <% end %>
         </pre>
- 			<% end %>
-    </li>
-  <% end %>
-</ul>
+      </li>
+    <% end %>
+  </ul>
 </div>
 
 <div class="row">

@@ -1,4 +1,17 @@
 <tr class="row">
-	<td class="span4"><%= timesheet.punch_in.strftime("%-I:%M%P, %b %d/%y") %></td>
-	<td class="span4"><%= timesheet.punch_out.strftime("%-I:%M%P, %b %d/%y") %></td>
+	<td class="span5">
+		<p><%= timesheet.punch_in.strftime("%-I:%M%P, %b %d %Y") %></p>		
+	</td>
+
+	<td class="span5">
+		<% if timesheet.punch_out !=nil %>
+			<p><%= timesheet.punch_out.strftime("%-I:%M%P, %b %d %Y") %></p>
+		<% else %>
+			<p>Currently clocked in.</p>
+		<% end %>
+	</td>
+
+	<%if current_employee.manager? %>
+		<td class="span2"><%= button_to "edit", edit_timesheet_path(timesheet.id), :class => "btn btn-warning" %></td>
+	<% end %>
 </tr>

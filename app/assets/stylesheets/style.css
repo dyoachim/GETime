@@ -18,6 +18,10 @@ h1 {
 	text-align: center;
 }
 
+.links_container {
+	text-align: center;
+}
+
 .timesheet_container {
 	margin: 0 auto;
 	width: 600px;
@@ -26,7 +30,7 @@ h1 {
 }
 
 .employees_container {
-	margin: 0 auto;
+	margin: 0px auto;
 	width:66.6%;
 }
 

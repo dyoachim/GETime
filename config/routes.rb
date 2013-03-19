@@ -1,7 +1,7 @@
 GEtime::Application.routes.draw do
   resources :employees
   resources :sessions, only: [:new, :create, :destroy]
-  resources :timesheets, only: [:create, :update]
+  resources :timesheets, only: [:create, :update, :edit, :time_change]
 
   root to: 'employees#home'
 
@@ -10,6 +10,8 @@ GEtime::Application.routes.draw do
   match '/logout', to: 'sessions#destroy', via: :delete
   match '/edit', to: 'employees#edit'
   match '/timesheets/:id', to: 'timesheets#update'
+  match '/timesheets/:id/edit', to: 'timesheets#edit'
+  match 'timesheets/:id/time_change' => 'timesheets#time_change', :as => "time_change"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

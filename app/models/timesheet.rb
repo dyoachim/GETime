@@ -9,33 +9,21 @@ class Timesheet < ActiveRecord::Base
 
   default_scope order: 'timesheets.created_at DESC'
 
-  def punch_in_management(current_employee, update_to_punch_in)
+  def time_change(current_employee, update_to_punch_in, update_to_punch_out)
     if current_employee.manager?
       self.punch_in = update_to_punch_in
-      change_log_hash = {"In: #{update_to_punch_in}" => current_employee.name}
-      if change_log.nil?
-        self.change_log = change_log_hash.as_json()
-      else
-        change_log.merge!(change_log_hash) { |key, v1, v2| v1 }
-        self.change_log = change_log.as_json()
-      end
-    else
-      return
-    end
-  end
+      self.punch_out = update_to_punch_out
+      change_log_hash = {"In: #{punch_in}, Out: #{punch_out}" => current_employee.name}
 
-  def punch_out_management(current_employee, update_to_punch_out)
-  	if current_employee.manager?
-  		self.punch_out = update_to_punch_out
-  		change_log_hash = {"Out: #{update_to_punch_out}" => current_employee.name}
+
       if change_log.nil?
         self.change_log = change_log_hash.as_json()
       else
-        change_log.merge!(change_log_hash) { |key, v1, v2| v1 }
-        self.change_log = change_log.as_json()
+        self.change_log = JSON.parse(change_log).merge(change_log_hash).as_json
       end
-  	else
-      return
+      self.save!
+    else
+      false
     end
   end
 end
