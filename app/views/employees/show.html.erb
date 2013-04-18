@@ -12,7 +12,8 @@
 </br>
 
 <div class="row-fluid">
-	<% unless current_employee?(@employee) || current_employee.manager? %>
+
+	<% unless (current_employee !=nil && (current_employee?(@employee) || current_employee.manager?)) %>
 		<div class="text-center"><span class="alert alert-block">You are not authorised to view this information.</span></div>
 	<% end %>
 

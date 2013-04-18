@@ -15,13 +15,6 @@ describe "Timesheet pages" do
         expect { click_button "Clock In" }.to change(Timesheet, :count).by(1)
       end
     end
-
-    context "when not logged in" do
-      it "does not create a timesheet" do
-        visit employee_path(employee)
-        expect { click_button "Clock In" }.to change(Timesheet, :count).by(0)
-      end
-    end
   end
 
   describe "timesheet punch out" do

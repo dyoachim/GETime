@@ -31,8 +31,3 @@ _____________________________________________
 	bundle exec rake db:test:prepare
 
 
-NOTES:
-
-
-Special Thanks to Mike Hartl's Ruby on Rails Tutorial. Much of code borrows from his superb craftmanship and guidance.
-http://ruby.railstutorial.org/

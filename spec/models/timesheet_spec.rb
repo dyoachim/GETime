@@ -31,60 +31,37 @@ describe Timesheet do
 	end
 
   describe "manager powers" do
-    new_punch_in_time = DateTime.now.utc - 1.hour
-    second_new_punch_in_time = DateTime.now.utc - 2.hours    
-    new_punch_out_time = DateTime.now.utc + 2.hours
-    second_new_punch_out_time = DateTime.now.utc + 3.hours
+    update_to_punch_in = DateTime.now.utc - 1.hour   
+    update_to_punch_out = DateTime.now.utc + 2.hours
+    second_update_to_punch_in = DateTime.now.utc - 2.hours 
+    second_update_to_punch_out = DateTime.now.utc + 3.hours
 
     context "manager" do
       before { manager.manager = true }
 
+      context "first update" do
+        before(:each) { timesheet.time_change(manager, update_to_punch_in, update_to_punch_out) }
 
-      context "punch in" do
-        before(:each) { timesheet.punch_in_management(manager, new_punch_in_time) }
-
-        it "does update punch_in for selected employee" do
-          timesheet.punch_in.to_i.should == (new_punch_in_time).to_i
+        it "does update punch_in/out for selected employee" do
+          timesheet.punch_in.to_i.should  == update_to_punch_in.to_i
+          timesheet.punch_out.to_i.should == update_to_punch_out.to_i
         end
 
-        it "does update change_log IN" do
-          timesheet.change_log.should == {"In: #{new_punch_in_time}" => manager.name}.as_json
-        end
-
-        context "second punch in" do
-          before(:each) { timesheet.punch_in_management(manager, second_new_punch_in_time) }
-
-          it "does update punch_in again for selected employee" do
-            timesheet.punch_in.to_i.should == (second_new_punch_in_time).to_i
-          end
-
-          it "does update change_log IN again" do
-            timesheet.change_log.should == {"In: #{new_punch_in_time}" => manager.name, "In: #{second_new_punch_in_time}" => manager.name}.as_json
-          end
+        it "does update change_log" do
+          timesheet.change_log.should == {"In: #{update_to_punch_in}, Out: #{update_to_punch_out}" => manager.name}
         end
       end
 
-      context "punch out" do
-        before(:each) { timesheet.punch_out_management(manager, new_punch_out_time) }
-        
-        it "does update punch_out for selected employee" do
-          timesheet.punch_out.to_i.should == new_punch_out_time.to_i
+      context "second update" do
+        before(:each) { timesheet.time_change(manager, second_update_to_punch_in, second_update_to_punch_out) }
+
+        it "does update punch_in again for selected employee" do
+          timesheet.punch_in.to_i.should  == second_update_to_punch_in.to_i
+          timesheet.punch_out.to_i.should == second_update_to_punch_out.to_i
         end
 
-        it "does update change log OUT" do
-          timesheet.change_log.should == {"Out: #{new_punch_out_time}" => manager.name}.as_json
-        end
-
-        context "second punch out" do
-          before(:each) { timesheet.punch_out_management(manager, second_new_punch_out_time) }
-
-          it "does update punch_out again for selected employee" do
-            timesheet.punch_out.to_i.should == (second_new_punch_out_time).to_i
-          end
-
-          it "does update change_log OUT again" do
-            timesheet.change_log.should == {"Out: #{new_punch_out_time}" => manager.name, "Out: #{second_new_punch_out_time}" => manager.name}.as_json
-          end
+        it "does update change_log again" do
+          timesheet.change_log.should == {"In: #{second_update_to_punch_in}, Out: #{second_update_to_punch_out}" => manager.name}
         end
       end
     end
@@ -93,26 +70,15 @@ describe Timesheet do
       before { manager.manager = false }
 
       context "punch in" do
-        before(:each) { timesheet.punch_in_management(manager, new_punch_in_time) }
+        before(:each) { timesheet.time_change(manager, update_to_punch_in, update_to_punch_out) }
 
-        it "does not update punch_in for selected employee" do
-          timesheet.punch_in.to_i.should_not == new_punch_in_time.to_i
+        it "does not update punch_in/out for selected employee" do
+          timesheet.punch_in.to_i.should_not  == update_to_punch_in.to_i
+          timesheet.punch_out.to_i.should_not == update_to_punch_out.to_i
         end
 
-        it "does not update change log IN" do
-          timesheet.change_log.should_not == {"In: #{new_punch_in_time}" => manager.name}.as_json
-        end
-      end
-
-      context "punch out" do
-        before(:each) { timesheet.punch_out_management(manager, new_punch_out_time) }
-
-        it "does not update punch_out for selected employee" do
-          timesheet.punch_out.to_i.should_not == new_punch_out_time.to_i
-        end
-
-        it "does not update change log OUT" do
-          timesheet.change_log.should_not == {"Out: #{new_punch_out_time}" => manager.name}.as_json
+        it "does not update change log" do
+          timesheet.change_log.should == nil
         end
       end
     end

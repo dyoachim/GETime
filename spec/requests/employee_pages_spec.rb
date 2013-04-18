@@ -41,9 +41,9 @@ describe "Employee pages" do
           visit employees_path
         end
 
-        it { should have_link('delete', href: employee_path(Employee.first)) }
+        it { should have_button('delete') }
         it "should be able to delete another employee" do
-          expect { click_link('delete') }.to change(Employee, :count).by(-1)
+          expect { click_button('delete') }.to change(Employee, :count).by(-1)
         end
         it { should_not have_link('delete', href: employee_path(:manager)) }
       end
@@ -54,12 +54,13 @@ describe "Employee pages" do
     let!(:t1) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now, punch_out: (DateTime.now + 1.hour)) }
     let!(:t2) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.tomorrow, punch_out: (DateTime.tomorrow + 1.hour)) }
 
-    before { visit employee_path(employee) }
+    before(:each) do
+      log_in employee
+      visit employee_path(employee)
+    end
 
-    it { should have_selector('h1',    text: employee.name) }
-    it { should have_selector("title", text: employee.name) }
-    it { should have_content(t1.punch_in) }
-    it { should have_content(t2.punch_in) }
+    it { should have_content(t1.punch_in.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t2.punch_in.strftime("%-I:%M%P, %b %d %Y")) }
     it { should have_content(employee.timesheets.count) }
   end
 
