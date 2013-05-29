@@ -3,9 +3,13 @@
 <h1><%= @employee.name %></h1>
 <div class="user_info_container">
 	<% if @employee.clocked_in? && current_employee?(@employee) %>
-		<%= button_to "Clock Out",:id => "clock_out_tester", :controller => "timesheets", :method => :put, :action => "update" %>
+		<%= form_for current_employee.timesheets.first do |f| %>
+			<%= f.submit "Clock Out", :class => "btn btn-primary" %>
+		<% end %>
 	<% elsif current_employee?(@employee) %>
-		<%= button_to "Clock In",:id => "clock_in_tester", :controller => "timesheets", :action => "create" %>
+		<%= form_for(Timesheet.new) do |f| %>
+  			<%= f.submit "Clock In", :class => "btn btn-primary" %>
+		<% end %>
 	<% end %>
 </div>
 
@@ -21,7 +25,7 @@
 	  	<table class="table table-striped">
 	  		<caption><h3>Timesheets (<%= @employee.timesheets.count %>)</h3></caption>
 	  		<tr class="row">
-	  			<td><strong>In</strong></td><td><strong>Out</strong></td>
+	  			<td><strong>In</strong></td><td><strong>Out</strong></td><% if current_employee.manager? %> <td></td> <% end %>
 	    		<%= render @timesheets %>
 	    	</tr>
 		</table>

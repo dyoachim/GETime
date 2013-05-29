@@ -8,7 +8,7 @@ class TimesheetsController < ApplicationController
       cookies[:remember_token] = current_employee.remember_token
     
     	flash[:success] = "Clocked in!"
-    	redirect_to employees_path(:employee)
+    	redirect_to current_employee
     else
       redirect_to root_url
     end
@@ -20,7 +20,7 @@ class TimesheetsController < ApplicationController
       cookies[:remember_token] = current_employee.remember_token
 
   		flash[:success] = "Clocked out!"
-  		redirect_to employees_path(:employee)
+  		redirect_to current_employee
   	else
   		redirect_to root_url
   	end
