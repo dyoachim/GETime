@@ -1,5 +1,6 @@
-git source 'https://rubygems.org'
+source 'https://rubygems.org'
 
+ruby '1.9.2'
 gem 'rails', '3.2.6'
 gem 'rspec-rails', '2.10.1'
 gem 'bcrypt-ruby', '3.0.1'
