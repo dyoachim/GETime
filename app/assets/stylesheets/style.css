@@ -2,6 +2,12 @@ h1 {
 	text-align: center;
 }
 
+.home_paragraph_container {
+	width: 400px;
+	margin: 0 auto;
+	margin-top: 80px;
+}
+
 .log_in_container {
 	margin: 0 auto;
 	width: 400px;
