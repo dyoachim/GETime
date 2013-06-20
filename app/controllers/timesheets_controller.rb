@@ -33,7 +33,7 @@ class TimesheetsController < ApplicationController
 
   def time_change
     @timesheet = Timesheet.find(params[:id])
-    if @timesheet.time_change(current_employee, params[:timesheet][:punch_in], params[:timesheet][:punch_in])
+    if @timesheet.time_change(current_employee, params[:timesheet][:punch_in], params[:timesheet][:punch_out])
       flash[:success] = "Time changed successfully"
       redirect_to root_url
     else
