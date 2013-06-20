@@ -35,7 +35,7 @@ class TimesheetsController < ApplicationController
     @timesheet = Timesheet.find(params[:id])
     if @timesheet.time_change(current_employee, params[:timesheet][:punch_in], params[:timesheet][:punch_out])
       flash[:success] = "Time changed successfully"
-      redirect_to root_url
+      redirect_to employee_path(@timesheet.employee_id)
     else
       flash[:failure] = "Failed to update"
       redirect_to root_url
