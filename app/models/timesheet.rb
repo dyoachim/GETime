@@ -27,4 +27,13 @@ class Timesheet < ActiveRecord::Base
       false
     end
   end
+
+  def hours_worked
+    if (punch_in == nil || punch_out == nil || (punch_out < punch_in))
+      return nil
+    else
+      elapsed_hours = ((punch_out - punch_in) / 3600).to_f.round(2)
+      return elapsed_hours
+    end
+  end
 end

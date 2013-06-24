@@ -25,7 +25,7 @@
 	  	<table class="table table-striped">
 	  		<caption><h3>Timesheets (<%= @employee.timesheets.count %>)</h3></caption>
 	  		<tr class="row">
-	  			<td><strong>In</strong></td><td><strong>Out</strong></td><% if current_employee.manager? %> <td></td> <% end %>
+	  			<td><strong>In</strong></td><td><strong>Out</strong></td><td>Total</td><% if current_employee.manager? %> <td></td> <% end %>
 	    		<%= render @timesheets %>
 	    	</tr>
 		</table>

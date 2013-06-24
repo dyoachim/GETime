@@ -30,6 +30,22 @@ describe Timesheet do
  		end    
 	end
 
+  describe "hours_worked" do
+    it "is nil when punch_out is missing" do
+      timesheet.punch_out = nil
+      timesheet.hours_worked.should == nil
+    end
+
+    it "is nil when punch_out is earlier than punch_in" do
+      timesheet.punch_out = DateTime.now - 5.hours
+      timesheet.hours_worked.should == nil
+    end
+
+    it "does display hours when punch_in and punch_out present" do
+      timesheet.hours_worked.should == ((timesheet.punch_out - timesheet.punch_in) / 3600).to_f.round(2)
+    end
+  end
+
   describe "manager powers" do
     update_to_punch_in = DateTime.now.utc - 1.hour   
     update_to_punch_out = DateTime.now.utc + 2.hours
