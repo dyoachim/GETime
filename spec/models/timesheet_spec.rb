@@ -43,12 +43,12 @@ describe Timesheet do
         before(:each) { timesheet.time_change(manager, update_to_punch_in, update_to_punch_out) }
 
         it "does update punch_in/out for selected employee" do
-          timesheet.punch_in.to_i.should  == update_to_punch_in.to_i
-          timesheet.punch_out.to_i.should == update_to_punch_out.to_i
+          timesheet.punch_in.should  == update_to_punch_in.to_datetime
+          timesheet.punch_out.should == update_to_punch_out.to_datetime
         end
 
         it "does update change_log" do
-          timesheet.change_log.should == {"In: #{update_to_punch_in}, Out: #{update_to_punch_out}" => manager.name}
+          timesheet.change_log.should == {"In: #{update_to_punch_in.strftime("%-I:%M%P, %b %d %Y")}, Out: #{update_to_punch_out.strftime("%-I:%M%P, %b %d %Y")}" => manager.name}
         end
       end
 
@@ -56,12 +56,12 @@ describe Timesheet do
         before(:each) { timesheet.time_change(manager, second_update_to_punch_in, second_update_to_punch_out) }
 
         it "does update punch_in again for selected employee" do
-          timesheet.punch_in.to_i.should  == second_update_to_punch_in.to_i
-          timesheet.punch_out.to_i.should == second_update_to_punch_out.to_i
+          timesheet.punch_in.should  == second_update_to_punch_in.to_datetime
+          timesheet.punch_out.should == second_update_to_punch_out.to_datetime
         end
 
         it "does update change_log again" do
-          timesheet.change_log.should == {"In: #{second_update_to_punch_in}, Out: #{second_update_to_punch_out}" => manager.name}
+          timesheet.change_log.should == {"In: #{second_update_to_punch_in.strftime("%-I:%M%P, %b %d %Y")}, Out: #{second_update_to_punch_out.strftime("%-I:%M%P, %b %d %Y")}" => manager.name}
         end
       end
     end
@@ -73,8 +73,8 @@ describe Timesheet do
         before(:each) { timesheet.time_change(manager, update_to_punch_in, update_to_punch_out) }
 
         it "does not update punch_in/out for selected employee" do
-          timesheet.punch_in.to_i.should_not  == update_to_punch_in.to_i
-          timesheet.punch_out.to_i.should_not == update_to_punch_out.to_i
+          timesheet.punch_in.should_not  == update_to_punch_in.to_datetime
+          timesheet.punch_out.should_not == update_to_punch_out.to_datetime
         end
 
         it "does not update change log" do

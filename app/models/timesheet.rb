@@ -14,7 +14,7 @@ class Timesheet < ActiveRecord::Base
     if current_employee.manager?
       self.punch_in = update_to_punch_in
       self.punch_out = update_to_punch_out
-      change_log_hash = {"In: #{punch_in}, Out: #{punch_out}" => current_employee.name}
+      change_log_hash = {"In: #{punch_in.strftime("%-I:%M%P, %b %d %Y")}, Out: #{punch_out.strftime("%-I:%M%P, %b %d %Y")}" => current_employee.name}
 
 
       if change_log.nil?
