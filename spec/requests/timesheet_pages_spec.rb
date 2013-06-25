@@ -24,9 +24,9 @@ describe "Timesheet pages" do
     context "when logged in with correct employee" do
       it "does update a timesheet" do
         click_button "Clock In"
-        timesheet = Timesheet.first
+        old_out = Timesheet.first.punch_out
         click_button "Clock Out"
-        timesheet.reload.punch_out.utc.to_i.should  == DateTime.now.utc.to_i
+        Timesheet.first.reload.punch_out.should_not == old_out
       end
     end
   end
