@@ -25,14 +25,24 @@ describe "Employee pages" do
 
       it "does list each employee" do
         Employee.paginate(page: 1).each do |employee|
-          page.should have_selector('li', text: employee.name)
+          if employee.active_employee
+            page.should have_selector('li', text: employee.name)
+          end
+        end
+      end
+
+      it "does not list deleted employees" do
+        Employee.paginate(page: 1).each do |employee|
+          if !employee.active_employee
+            page.should_not have_selector('li', text: employee.name)
+          end
         end
       end
     end
 
-    describe "delete links" do
+    describe "delete button" do
 
-      it { should_not have_link('delete') }
+      it { should_not have_button('delete') }
 
       context "when a manager" do
         let(:manager) { FactoryGirl.create(:manager) }
@@ -42,9 +52,11 @@ describe "Employee pages" do
         end
 
         it { should have_button('delete') }
-        it "should be able to delete another employee" do
-          expect { click_button('delete') }.to change(Employee, :count).by(-1)
+        
+        it "does not delete another employee" do
+          expect { click_button('delete') }.to change(Employee, :count).by(0)
         end
+        
         it { should_not have_link('delete', href: employee_path(:manager)) }
       end
     end

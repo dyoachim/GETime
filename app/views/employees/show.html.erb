@@ -1,3 +1,5 @@
+<% if @employee.active_employee %>
+
 <% content_for :title, @employee.name %>
 
 <h1><%= @employee.name %></h1>
@@ -32,3 +34,7 @@
 		<%= will_paginate @timesheets %>
 	<% end %>
 </div>
+
+<% else %>
+	<div class="text-center"><span class="alert alert-block">This account has been deleted.</span></div>
+<% end %>

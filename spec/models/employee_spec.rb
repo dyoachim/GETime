@@ -96,6 +96,13 @@ describe Employee do
     	it { should be_manager }
   	end
 
+  	context "destroy" do
+  		it "sets active_employee to false" do
+  			employee.destroy
+  			employee.active_employee.should == false
+  		end
+  	end
+
   	describe "timesheets associations" do
 
     	before { employee.save }
@@ -108,6 +115,9 @@ describe Employee do
 
     	it "should destroy associated timesheets" do
       		timesheets = employee.timesheets.dup
+      		def employee.destroy
+  				self.class.superclass.instance_method(:destroy).bind(self).call
+			end
       		employee.destroy
       		timesheets.should_not be_empty
       		timesheets.each do |timesheet|
