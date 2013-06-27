@@ -13,7 +13,6 @@ describe Timesheet do
   it { should respond_to(:employee_id) }
   it { should respond_to(:employee) }
   it { should respond_to(:changelogs) }
-  it { should respond_to(:change_log)}
   its(:employee) { should == employee }
 
   it { should be_valid}
