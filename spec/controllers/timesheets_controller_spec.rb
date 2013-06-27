@@ -4,6 +4,9 @@ describe TimesheetsController do
   render_views
 
   let(:employee) { FactoryGirl.create(:employee) }
+  let(:manager) { FactoryGirl.create(:manager) }
+  let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => DateTime.now, :employee_id => employee) }
+  let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => DateTime.now, :employee_id => employee) }
 
   describe "timesheet creation" do
 
@@ -28,7 +31,7 @@ describe TimesheetsController do
   end
 
   describe "timesheet punch out" do
-    let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => DateTime.now, :employee_id => employee) }
+    
 
     context "when logged in with correct employee" do
 
@@ -51,6 +54,34 @@ describe TimesheetsController do
           response.status.should == 302
           timesheet.punch_out.should_not change()
         end
+      end
+    end
+  end
+
+  describe "changelog creation" do
+    context "when time_change is called" do
+      it "creates a new Changelog" do
+        pending
+      end
+
+      it "records the manager" do
+        pending
+      end
+
+      it "records the old in time" do
+        pending
+      end
+
+      it "records the old out time" do
+        pending
+      end
+
+      it "records the new in time" do
+        pending
+      end
+
+      it "records the new out time" do
+        pending
       end
     end
   end

@@ -3,6 +3,8 @@ require 'json/ext'
 class Timesheet < ActiveRecord::Base
   attr_accessible :punch_in, :punch_out, :change_log
   belongs_to :employee
+  has_many :changelogs
+  
   serialize :change_log
 
   validates :punch_in, presence: true
@@ -10,22 +12,19 @@ class Timesheet < ActiveRecord::Base
 
   default_scope order: 'timesheets.created_at DESC'
 
-  def time_change(current_employee, update_to_punch_in, update_to_punch_out)
+  def manager_time_correction(current_employee, update_to_punch_in, update_to_punch_out)
     if current_employee.manager?
       self.punch_in = update_to_punch_in
       self.punch_out = update_to_punch_out
-      change_log_hash = {"In: #{punch_in.strftime("%-I:%M%P, %b %d %Y")}, Out: #{punch_out.strftime("%-I:%M%P, %b %d %Y")}" => current_employee.name}
-
-
-      if change_log.nil?
-        self.change_log = change_log_hash
-      else
-        self.change_log = change_log.merge(change_log_hash)
-      end
       self.save!
     else
       false
     end
+  end
+
+  def make_log(current_employee, old_in, old_out, new_in, new_out)
+      self.changelogs.build(:changed_by => current_employee.name, :old_in => old_in, :old_out => old_out, :new_in => new_in, :new_out => new_out)
+      self.save!
   end
 
   def hours_worked
