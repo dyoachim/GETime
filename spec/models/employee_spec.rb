@@ -106,8 +106,8 @@ describe Employee do
   	describe "timesheets associations" do
 
     	before { employee.save }
-    	let!(:older_timesheet) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.yesterday, created_at: 1.day.ago) }
-    	let!(:newer_timesheet) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now - 1.hour, created_at: 1.hour.ago) }
+    	let!(:older_timesheet) { FactoryGirl.create(:timesheet, employee: employee, punch_in: Time.now - 2.hours, created_at: 2.hours.ago) }
+    	let!(:newer_timesheet) { FactoryGirl.create(:timesheet, employee: employee, punch_in: Time.now - 1.hour, created_at: 1.hour.ago) }
 
     	context "with the right microposts in the right order" do
       		it { employee.timesheets.should == [newer_timesheet, older_timesheet] }

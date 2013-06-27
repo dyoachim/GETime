@@ -33,11 +33,7 @@ class TimesheetsController < ApplicationController
 
   def time_change
     @timesheet = Timesheet.find(params[:id])
-    temp_old_in = @timesheet.punch_in
-    temp_old_out = @timesheet.punch_out
-
     if @timesheet.manager_time_correction(current_employee, params[:timesheet][:punch_in], params[:timesheet][:punch_out])
-      @timesheet.make_log(current_employee, temp_old_in, temp_old_out, @timesheet.punch_in, @timesheet.punch_out)
       flash[:success] = "Time changed successfully"
       redirect_to employee_path(@timesheet.employee_id)
     else

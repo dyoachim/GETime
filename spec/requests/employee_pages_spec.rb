@@ -63,8 +63,8 @@ describe "Employee pages" do
   end
 
   describe "account page" do
-    let!(:t1) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.now, punch_out: (DateTime.now + 1.hour)) }
-    let!(:t2) { FactoryGirl.create(:timesheet, employee: employee, punch_in: DateTime.tomorrow, punch_out: (DateTime.tomorrow + 1.hour)) }
+    let!(:t1) { FactoryGirl.create(:timesheet, employee: employee, punch_in: Time.now, punch_out: (Time.now + 1.hour)) }
+    let!(:t2) { FactoryGirl.create(:timesheet, employee: employee, punch_in: Time.now + 24.hours, punch_out: (Time.now + 25.hours)) }
 
     before(:each) do
       log_in employee

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Changelog do
 
 
-let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => DateTime.now, :punch_out => DateTime.now + 1.hour) }
+let(:timesheet) { FactoryGirl.create(:timesheet, :punch_in => Time.now, :punch_out => Time.now + 1.hour) }
 before { @changelog = timesheet.changelogs.build(:changed_by => "Manager Dave", :old_in => timesheet.punch_in, :old_out => timesheet.punch_out, :new_in => timesheet.punch_in - 1.hour, :new_out => timesheet.punch_out + 1.hour) }
 
   subject { @changelog }

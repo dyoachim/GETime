@@ -10,8 +10,8 @@ FactoryGirl.define do
     	end
 
 	    factory :timesheets do
-    		punch_in  DateTime.now
-    		punch_out DateTime.now + 1.hour
+    		punch_in  Time.now
+    		punch_out Time.now + 1.hour
     		employee
   		end
   	end

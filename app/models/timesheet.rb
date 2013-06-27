@@ -14,9 +14,13 @@ class Timesheet < ActiveRecord::Base
 
   def manager_time_correction(current_employee, update_to_punch_in, update_to_punch_out)
     if current_employee.manager?
+      old_in = self.punch_in
+      old_out = self.punch_out
+      
       self.punch_in = update_to_punch_in
       self.punch_out = update_to_punch_out
       self.save!
+      self.make_log(current_employee, old_in, old_out ,update_to_punch_in, update_to_punch_out)
     else
       false
     end
