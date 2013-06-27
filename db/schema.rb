@@ -11,22 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627202304) do
-
-  create_table "change_logs", :force => true do |t|
-    t.integer  "timesheet_id"
-    t.string   "changed_by"
-    t.datetime "old_in"
-    t.datetime "new_in"
-    t.datetime "old_out"
-    t.datetime "new_out"
-    t.datetime "punch_in"
-    t.datetime "punch_out"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "change_logs", ["timesheet_id", "created_at"], :name => "index_change_logs_on_timesheet_id_and_created_at"
+ActiveRecord::Schema.define(:version => 20130627204136) do
 
   create_table "changelogs", :force => true do |t|
     t.integer  "timesheet_id"
