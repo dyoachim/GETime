@@ -4,6 +4,7 @@ FactoryGirl.define do
     	sequence(:username) { |n| "person_#{n}" }
     	password "foobar"
     	password_confirmation "foobar"
+      employee_time_zone "(GMT+00:00) UTC"
 
 	    factory :manager do
     		manager true

@@ -8,12 +8,13 @@ describe Employee do
 
   it { should respond_to(:name) }
   it { should respond_to(:username) }
-  it { should respond_to(:password_digest)}
-  it { should respond_to(:password)}
-  it { should respond_to(:password_confirmation)}
-  it { should respond_to(:remember_token)}
-  it { should respond_to(:authenticate)}
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
+  it { should respond_to(:authenticate) }
   it { should respond_to(:manager) }
+  it { should respond_to(:employee_time_zone) }
   it { should respond_to(:timesheets) }
 
 
@@ -62,6 +63,15 @@ describe Employee do
 
 	context "when password doesn't match password confirmation" do
 		before { employee.password_confirmation = "incorrect" }
+		it { should_not be_valid }
+	end
+
+	context "employee time zone should be UTC at default" do
+		it { employee.employee_time_zone.should == "(GMT+00:00) UTC" }
+	end
+
+	context "when employee time zone is blank" do
+		before {employee.employee_time_zone = ""}
 		it { should_not be_valid }
 	end
 

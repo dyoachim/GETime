@@ -14,8 +14,11 @@
       <%= f.label :password %>
       <%= f.password_field :password %>
 
-      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.label :password_confirmation, "Confirm password" %>
       <%= f.password_field :password_confirmation, :id=>'confirm' %>
+
+      <%= f.label :employee_time_zone, "Time zone" %>
+      <%= f.text_field :employee_time_zone, :id=>'timezone' %>
     </br>
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
