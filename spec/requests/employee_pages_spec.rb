@@ -102,7 +102,7 @@ describe "Employee pages" do
         fill_in "Username",     with: "suave00seven"
         fill_in "Password",     with: "foobar"
         fill_in "Confirmation", with: "foobar"
-        fill_in "timezone",    with: "(GMT-06:00) Central Time (US & Canada)"
+        page.select('(GMT+00:00) UTC', :from => 'timezone')
       end
 
       describe "after saving the employee" do
@@ -138,13 +138,13 @@ describe "Employee pages" do
     context "with valid information" do
       let(:new_name)  { "New Name" }
       let(:new_username) { "new username" }
-      let(:new_time_zone) { "(GMT-06:00) Central Time (US & Canada)"}
       before do
         fill_in "Name",             with: new_name
         fill_in "Username",         with: new_username
         fill_in "Password",         with: employee.password
         fill_in 'confirm',          with: employee.password
-        fill_in 'timezone',        with: new_time_zone
+        page.select('(GMT-10:00) Hawaii', :from => 'timezone')
+
         click_button "Save changes"
       end
 

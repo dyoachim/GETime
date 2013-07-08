@@ -11,7 +11,7 @@ class Employee < ActiveRecord::Base
 	validates :password, presence: true, length: {minimum:6}, :if => :should_validate_password?
 	validates :password_confirmation, presence: true, :if => :should_validate_password?
 	validates :employee_time_zone, presence: true
-	validates_inclusion_of :employee_time_zone, :in => ActiveSupport::TimeZone.all.map(&:to_s)
+	validates_inclusion_of :employee_time_zone, :in => ActiveSupport::TimeZone.all.map(&:name)
 
 
 	def destroy
