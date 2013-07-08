@@ -2,7 +2,7 @@ class TimesheetsController < ApplicationController
   before_filter :logged_in_employee
 
   def create
-  	@timesheet = current_employee.timesheets.build(:punch_in => DateTime.now)
+  	@timesheet = current_employee.timesheets.build(:punch_in => Time.now)
     if @timesheet.save
       current_employee.toggle!(:clocked_in)
       cookies[:remember_token] = current_employee.remember_token
@@ -15,7 +15,7 @@ class TimesheetsController < ApplicationController
   end
 
   def update
-  	if current_employee.timesheets.first.update_attributes(:punch_out => DateTime.now)
+  	if current_employee.timesheets.first.update_attributes(:punch_out => Time.now)
       current_employee.toggle!(:clocked_in)
       cookies[:remember_token] = current_employee.remember_token
 

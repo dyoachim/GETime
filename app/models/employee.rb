@@ -1,6 +1,6 @@
 class Employee < ActiveRecord::Base
 	attr_accessible :name, :username, :password, :password_confirmation, :active_employee
-	has_many :timesheets, dependent: :destroy
+	has_many :timesheets
 	has_secure_password
 
 	before_save { |employee| employee.username = username.downcase }

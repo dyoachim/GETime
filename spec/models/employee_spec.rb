@@ -112,17 +112,5 @@ describe Employee do
     	context "with the right microposts in the right order" do
       		it { employee.timesheets.should == [newer_timesheet, older_timesheet] }
     	end
-
-    	it "should destroy associated timesheets" do
-      		timesheets = employee.timesheets.dup
-      		def employee.destroy
-  				self.class.superclass.instance_method(:destroy).bind(self).call
-			end
-      		employee.destroy
-      		timesheets.should_not be_empty
-      		timesheets.each do |timesheet|
-        		Timesheet.find_by_id(timesheet.id).should be_nil
-      		end
-    	end
   	end
 end

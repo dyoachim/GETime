@@ -1,7 +1,7 @@
 require 'json/ext'
 
 class Timesheet < ActiveRecord::Base
-  attr_accessible :punch_in, :punch_out, :change_log
+  attr_accessible :punch_in, :punch_out
   belongs_to :employee
   has_many :changelogs
   
