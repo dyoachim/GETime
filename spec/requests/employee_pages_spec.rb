@@ -102,6 +102,7 @@ describe "Employee pages" do
         fill_in "Username",     with: "suave00seven"
         fill_in "Password",     with: "foobar"
         fill_in "Confirmation", with: "foobar"
+        fill_in "timezone",    with: "(GMT-06:00) Central Time (US & Canada)"
       end
 
       describe "after saving the employee" do
