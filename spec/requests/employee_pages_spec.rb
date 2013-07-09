@@ -71,8 +71,8 @@ describe "Employee pages" do
       visit employee_path(employee)
     end
 
-    it { should have_content(t1.punch_in.strftime("%-I:%M%P, %b %d %Y")) }
-    it { should have_content(t2.punch_in.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.punch_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t2.punch_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
     it { should have_content(employee.timesheets.count) }
   end
 
