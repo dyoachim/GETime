@@ -12,6 +12,7 @@ class Timesheet < ActiveRecord::Base
 
   default_scope order: 'timesheets.created_at DESC'
 
+#manager power to change the punch times of employee time sheet, makes a log
   def manager_time_correction(current_employee, update_to_punch_in, update_to_punch_out)
     if current_employee.manager?
       old_in = self.punch_in
@@ -26,6 +27,7 @@ class Timesheet < ActiveRecord::Base
     end
   end
 
+#creates a log of which manager changed punch times, and what was changed
   def make_log(current_employee, old_in, old_out, new_in, new_out)
       self.changelogs.build(:changed_by => current_employee.name, :old_in => old_in, :old_out => old_out, :new_in => new_in, :new_out => new_out)
       self.save!

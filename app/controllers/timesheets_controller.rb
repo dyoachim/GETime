@@ -1,7 +1,7 @@
 class TimesheetsController < ApplicationController
   before_filter :logged_in_employee
 
-  def create
+  def create #clocks in employee and creates new timesheet w/ punch in
   	@timesheet = current_employee.timesheets.build(:punch_in => Time.now)
     if @timesheet.save
       current_employee.toggle!(:clocked_in)
@@ -14,7 +14,7 @@ class TimesheetsController < ApplicationController
     end
   end
 
-  def update
+  def update #clocks out employee and updates timesheet w/ punch out
   	if current_employee.timesheets.first.update_attributes(:punch_out => Time.now)
       current_employee.toggle!(:clocked_in)
       cookies[:remember_token] = current_employee.remember_token
@@ -31,7 +31,7 @@ class TimesheetsController < ApplicationController
     @timesheet = Timesheet.find(params[:id])
   end
 
-  def time_change
+  def time_change #calls :manager_time_correction on associated timesheet object, and redirects after success/failure 
     @timesheet = Timesheet.find(params[:id])
     if @timesheet.manager_time_correction(current_employee, params[:timesheet][:punch_in], params[:timesheet][:punch_out])
       flash[:success] = "Time changed successfully"

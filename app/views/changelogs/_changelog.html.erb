@@ -1,0 +1,35 @@
+<% if current_employee.manager? %>
+	<td class="span12" colspan="4">
+<% else %>
+	<td class="span10" colspan="3">
+<% end %>
+		<div class="accordion" id="<%= "accordion#{timesheet.id}" %>">
+		  	<div class="accordion-group">
+		   		<div class="accordion-heading">
+		     		<a class="accordion-toggle" data-toggle="collapse" data-parent= "<%= "accordion#{timesheet.id}" %>" href="<%= "#collapseOne#{timesheet.id}" %>">
+		       			-\/-
+	     			</a>
+	    			<div id="<%= "collapseOne#{timesheet.id}" %>" class="accordion-body collapse">
+	      				<div class="accordion-inner">
+							<% timesheet.changelogs.each do |changelog| %>
+								<table>
+									<tbody>
+										<tr>
+										<td class="span5">
+												<%= changelog.old_in.strftime("%-I:%M%P, %b %d %Y") %> =>
+												<%= changelog.new_out.strftime("%-I:%M%P, %b %d %Y") %>
+											</td>
+											<td class="span5">
+												<%= changelog.old_out.strftime("%-I:%M%P, %b %d %Y") %> =>
+												<%= changelog.new_in.strftime("%-I:%M%P, %b %d %Y") %> by <%= changelog.changed_by %>
+											</td>
+										</tr>
+									</tbody>	
+								</table>
+							<% end %>	
+						</div>
+	    			</div>
+	    		</div>
+	  		</div>
+	  	</div>
+	</td>

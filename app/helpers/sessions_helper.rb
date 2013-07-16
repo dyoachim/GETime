@@ -2,12 +2,15 @@ module SessionsHelper
 
   def log_in(employee)
     cookies[:remember_token] = {value:   employee.remember_token, expires: 5.minutes.from_now.utc}
-    current_employee = employee
     @current_employee = employee
   end
 
   def logged_in?
     !current_employee.nil?
+  end
+
+  def clocked_in?
+    @current_employee.clocked_in
   end
 
   def current_employee=(employee)
@@ -31,7 +34,6 @@ module SessionsHelper
 
   def log_out
     cookies.delete(:remember_token)
-    current_employee = nil
     @current_employee = nil
   end
 

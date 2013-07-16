@@ -5,14 +5,19 @@
   <ul>
     <% @employees.each do |employee| %>
       <% unless employee.active_employee == false %>
-        <li class="span4" id="employees_list">
+        <li class="span12" id="employees_list">
       	  <pre>
       		  <div class="employees_display">
+              <% if employee.clocked_in? %>
+                    <%= image_tag("green_clock.png") %>
+              <% else %>
+                    <%= image_tag("red_clock.png") %>
+              <% end %>
         		  <%= link_to employee.name, employee %>
-        		</div>
-        	  <% if current_employee.manager? && !current_employee?(employee) %>
-       			  <%= button_to "delete", employee, method: :delete, :class => "btn btn-danger", data: { confirm: "Delete employee?" } %>
-            <% end %>
+        	    <% if current_employee.manager? && !current_employee?(employee) %>
+       			    <%= button_to "delete", employee, method: :delete, :class => "btn btn-danger", data: { confirm: "Delete employee?" } %>
+              <% end %>
+            </div>
           </pre>
         </li>
       <% end %>

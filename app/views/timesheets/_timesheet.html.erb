@@ -19,3 +19,9 @@
 		<td class="span2"><%= button_to "edit", edit_timesheet_path(timesheet.id), :class => "btn btn-warning" %></td>
 	<% end %>
 </tr>
+
+<% if timesheet.changelogs.present? %>
+	<tr class="row">
+		<%= render :partial => 'changelogs/changelog', :locals => { :timesheet => timesheet } %>
+	</tr>
+<% end %>

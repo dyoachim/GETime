@@ -1,26 +1,30 @@
 <header>
   <title><%= yield(:title) %></title>
-  <body>
-  <div class="nav-container">
-    <div class="masthead">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="container">
-            <ul class="nav">
-              <li><%= link_to "Home", root_path %></li>
-              <% if logged_in? %>
-                <li><%= link_to "Employees", employees_path %></li>
-                <li><%= link_to "Account", current_employee %></li>
-                <li><%= link_to "Settings", edit_employee_path(current_employee) %></li>
-                <li><%= link_to "Log out", logout_path, method: "delete" %></li>
-              <% else %>
-                <li><%= link_to "Log in", login_path %></li>
-              <% end %>
-            </ul>
+    <body>
+    <div class="nav-container">
+      <div class="masthead">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <% if logged_in? %>
+                  <% if clocked_in? %><li><%= image_tag("green_clock.png") %></li><% else %><li><%= image_tag("red_clock.png") %></li><% end %>
+                  <% else %><li><%= image_tag("grey_clock.png") %></li>
+                <% end %>
+                <li><%= link_to "Home", root_path %></li>
+                <% if logged_in? %>
+                  <li><%= link_to "Employees", employees_path %></li>
+                  <li><%= link_to "Account", current_employee %></li>
+                  <li><%= link_to "Settings", edit_employee_path(current_employee) %></li>
+                  <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+                <% else %>
+                  <li><%= link_to "Log in", login_path %></li>
+                <% end %>              
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </header>

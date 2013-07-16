@@ -3,6 +3,10 @@ require 'spec_helper'
 describe "Employee pages" do
 
   let(:employee) { FactoryGirl.create(:employee) }
+  let(:manager) { FactoryGirl.create(:manager) }
+  let(:new_name)  {"New Name"}
+  let(:new_username) {"new username"}
+  let(:new_password) {"newpassword"}
   
   subject { page }
 
@@ -25,6 +29,11 @@ describe "Employee pages" do
 
       it "does list each employee" do
         Employee.paginate(page: 1).each do |employee|
+          if employee.clocked_in
+            page.should have_xpath('//img[@src="/assets/green_clock.png"]')
+          else
+            page.should have_xpath('//img[@src="/assets/red_clock.png"]')
+          end
           if employee.active_employee
             page.should have_selector('li', text: employee.name)
           end
@@ -45,7 +54,6 @@ describe "Employee pages" do
       it { should_not have_button('delete') }
 
       context "when a manager" do
-        let(:manager) { FactoryGirl.create(:manager) }
         before do
           log_in manager
           visit employees_path
@@ -67,12 +75,22 @@ describe "Employee pages" do
     let!(:t2) { FactoryGirl.create(:timesheet, employee: employee, punch_in: Time.now + 24.hours, punch_out: (Time.now + 25.hours)) }
 
     before(:each) do
-      log_in employee
+      log_in manager
+      t1.manager_time_correction(manager, t1.punch_in-1.hour, t1.punch_out+1.hour)
       visit employee_path(employee)
+    end
+
+    it "should have one log" do
+      t1.changelogs.count.should == 1
     end
 
     it { should have_content(t1.punch_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
     it { should have_content(t2.punch_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.old_in.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.new_in.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.old_out.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.new_out.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.changed_by) }
     it { should have_content(employee.timesheets.count) }
   end
 
@@ -84,7 +102,6 @@ describe "Employee pages" do
   end
 
   describe "add worker" do
-
     before { visit add_worker_path }
 
     let(:submit) { "Create account" }
@@ -96,12 +113,11 @@ describe "Employee pages" do
     end
 
     context "with valid information" do
-
       before do
-        fill_in "Name",         with: "James Bond"
-        fill_in "Username",     with: "suave00seven"
-        fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in "Name",         with: new_name
+        fill_in "Username",     with: new_username
+        fill_in "Password",     with: new_password
+        fill_in "Confirmation", with: new_password
         page.select('(GMT+00:00) UTC', :from => 'timezone')
       end
 
@@ -136,13 +152,11 @@ describe "Employee pages" do
     end
 
     context "with valid information" do
-      let(:new_name)  { "New Name" }
-      let(:new_username) { "new username" }
       before do
         fill_in "Name",             with: new_name
         fill_in "Username",         with: new_username
-        fill_in "Password",         with: employee.password
-        fill_in 'confirm',          with: employee.password
+        fill_in "Password",         with: new_password
+        fill_in 'confirm',          with: new_password
         page.select('(GMT-10:00) Hawaii', :from => 'timezone')
 
         click_button "Save changes"
