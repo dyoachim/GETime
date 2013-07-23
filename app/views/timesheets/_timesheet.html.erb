@@ -21,7 +21,7 @@
 </tr>
 
 <% if timesheet.changelogs.present? %>
-	<tr class="row">
+	<tr class="row" id="changelog_container">
 		<%= render :partial => 'changelogs/changelog', :locals => { :timesheet => timesheet } %>
 	</tr>
 <% end %>

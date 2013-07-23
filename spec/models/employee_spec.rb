@@ -67,7 +67,7 @@ describe Employee do
 	end
 
 	context "employee time zone should be UTC at default" do
-		it { employee.employee_time_zone.should == "UTC" }
+		it { employee.employee_time_zone.should == "Eastern Time (US & Canada)" }
 	end
 
 	context "when employee time zone is blank" do

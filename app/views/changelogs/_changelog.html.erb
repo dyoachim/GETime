@@ -1,32 +1,30 @@
 <% if current_employee.manager? %>
-	<td class="span12" colspan="4">
+	<td class="span12" colspan="4" id="green_table_row">
 <% else %>
-	<td class="span10" colspan="3">
+	<td class="span10" colspan="3" id="green_table_row">
 <% end %>
 		<div class="accordion" id="<%= "accordion#{timesheet.id}" %>">
 		  	<div class="accordion-group">
 		   		<div class="accordion-heading">
 		     		<a class="accordion-toggle" data-toggle="collapse" data-parent= "<%= "accordion#{timesheet.id}" %>" href="<%= "#collapseOne#{timesheet.id}" %>">
-		       			-\/-
+		       			<center>-\/-</center>
 	     			</a>
 	    			<div id="<%= "collapseOne#{timesheet.id}" %>" class="accordion-body collapse">
 	      				<div class="accordion-inner">
-							<% timesheet.changelogs.each do |changelog| %>
-								<table>
-									<tbody>
-										<tr>
-										<td class="span5">
-												<%= changelog.old_in.strftime("%-I:%M%P, %b %d %Y") %> =>
-												<%= changelog.new_out.strftime("%-I:%M%P, %b %d %Y") %>
-											</td>
-											<td class="span5">
-												<%= changelog.old_out.strftime("%-I:%M%P, %b %d %Y") %> =>
-												<%= changelog.new_in.strftime("%-I:%M%P, %b %d %Y") %> by <%= changelog.changed_by %>
-											</td>
-										</tr>
-									</tbody>	
-								</table>
-							<% end %>	
+							<table class="table table-striped">
+								<tbody>
+									<% timesheet.changelogs.each do |changelog| %>
+									<tr>
+										<td><%= changelog.old_in.in_time_zone(current_employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y") %></td>
+										<td><%= changelog.old_out.in_time_zone(current_employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y") %></td>
+										<td><p>was changed to</p></td>
+										<td><%= changelog.new_in.in_time_zone(current_employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y") %></td>
+										<td><%= changelog.new_out.in_time_zone(current_employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y") %> </td>
+										<td>by <%= changelog.changed_by %></td>
+									</tr>
+									<% end %>	
+								</tbody>	
+							</table>
 						</div>
 	    			</div>
 	    		</div>

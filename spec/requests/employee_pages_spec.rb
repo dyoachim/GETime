@@ -80,16 +80,12 @@ describe "Employee pages" do
       visit employee_path(employee)
     end
 
-    it "should have one log" do
-      t1.changelogs.count.should == 1
-    end
-
     it { should have_content(t1.punch_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
     it { should have_content(t2.punch_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
-    it { should have_content(t1.changelogs.first.old_in.strftime("%-I:%M%P, %b %d %Y")) }
-    it { should have_content(t1.changelogs.first.new_in.strftime("%-I:%M%P, %b %d %Y")) }
-    it { should have_content(t1.changelogs.first.old_out.strftime("%-I:%M%P, %b %d %Y")) }
-    it { should have_content(t1.changelogs.first.new_out.strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.old_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.new_in.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.old_out.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
+    it { should have_content(t1.changelogs.first.new_out.in_time_zone(employee.employee_time_zone).strftime("%-I:%M%P, %b %d %Y")) }
     it { should have_content(t1.changelogs.first.changed_by) }
     it { should have_content(employee.timesheets.count) }
   end

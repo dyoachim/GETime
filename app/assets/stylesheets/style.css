@@ -48,6 +48,7 @@ h1 {
 	font-size: 18px;
 	display: table;
 	list-style: none;
+	height: 10px;
 }
 
 .timesheet_display span {
@@ -71,6 +72,14 @@ h1 {
 	padding-bottom:20px;
 	font-size:18px;
 	text-align:center;
+}
+
+#green_table_row {
+	background-color: #426F42;
+}
+
+#delete_employee_button {
+	float: right;
 }
 
 section {

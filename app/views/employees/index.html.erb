@@ -15,7 +15,7 @@
               <% end %>
         		  <%= link_to employee.name, employee %>
         	    <% if current_employee.manager? && !current_employee?(employee) %>
-       			    <%= button_to "delete", employee, method: :delete, :class => "btn btn-danger", data: { confirm: "Delete employee?" } %>
+       			    <%= button_to "delete", employee, method: :delete, :class => "btn btn-danger", :id => "delete_employee_button", data: { confirm: "Delete employee?" } %>
               <% end %>
             </div>
           </pre>
