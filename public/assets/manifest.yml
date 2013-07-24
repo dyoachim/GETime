@@ -1,6 +1,9 @@
 ---
+green_clock.png: green_clock-06e355395935a1a08f767396340084e7.png
+grey_clock.png: grey_clock-5979c3c77159df1aabb4729a20b16542.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
-application.js: application-359c83db6ebcc1589ed183a9fbbd818f.js
-application.css: application-c7dc5c8ec513f9438a28aceb676a52dc.css
+red_clock.png: red_clock-64e23efe2057e95691572fc3d0c7e231.png
+application.js: application-ff8068a85b7fc4a125007f7a98ad0458.js
+application.css: application-7d07dd52170619178a3b4fe71ef1a77f.css
 bootstrap-responsive.css: bootstrap-responsive-12c14e7aaeea7e92cf32f95bb6fa6edf.css
 bootstrap.css: bootstrap-0736863cbb070929ed7b25c432463e55.css
