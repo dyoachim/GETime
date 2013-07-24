@@ -1,30 +1,27 @@
 <header>
-  <title><%= yield(:title) %></title>
-    <body>
-    <div class="nav-container">
-      <div class="masthead">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                <% if logged_in? %>
-                  <% if clocked_in? %><li><i class="icon-time icon-2x" id="green_clock"></i></li><% else %><li><i class="icon-time icon-2x" id="red_clock"></i></li><% end %>
-                  <% else %><li><i class="icon-time icon-2x"></i></li>
-                <% end %>
-                <li><%= link_to "Home", root_path %></li>
-                <% if logged_in? %>
-                  <li><%= link_to "Employees", employees_path %></li>
-                  <li><%= link_to "Account", current_employee %></li>
-                  <li><%= link_to "Settings", edit_employee_path(current_employee) %></li>
-                  <li><%= link_to "Log out", logout_path, method: "delete" %></li>
-                <% else %>
-                  <li><%= link_to "Log in", login_path %></li>
-                <% end %>              
-              </ul>
-            </div>
+  <div class="nav-container">
+    <div class="masthead">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav">
+              <% if logged_in? %>
+                <% if clocked_in? %><li><i class="icon-time icon-2x" id="green_clock"></i></li><% else %><li><i class="icon-time icon-2x" id="red_clock"></i></li><% end %>
+                <% else %><li><i class="icon-time icon-2x"></i></li>
+              <% end %>
+              <li><%= link_to "Home", root_path %></li>
+              <% if logged_in? %>
+                <li><%= link_to "Employees", employees_path %></li>
+                <li><%= link_to "Account", current_employee %></li>
+                <li><%= link_to "Settings", edit_employee_path(current_employee) %></li>
+                <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+              <% else %>
+                <li><%= link_to "Log in", login_path %></li>
+              <% end %>              
+            </ul>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </header>
