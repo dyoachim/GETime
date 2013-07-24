@@ -25,10 +25,8 @@ describe "Timesheet pages" do
       it "does update a timesheet" do
         click_button "Clock In"
         old_out = Timesheet.first.punch_out
-        page.should have_xpath('//img[@src="/assets/green_clock.png"]')
         click_button "Clock Out"
         Timesheet.first.reload.punch_out.should_not == old_out
-        page.should have_xpath('//img[@src="/assets/red_clock.png"]')
       end
     end
   end

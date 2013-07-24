@@ -32,7 +32,6 @@ describe "Authentication" do
     describe "with valid information" do
       before { log_in employee }
 
-      it { should have_xpath('//img[@src="/assets/red_clock.png"]') }
       it { should have_selector('title', text: employee.name) }      
       it { should have_link('Employees',    href: employees_path) }
       it { should have_link('Account',  href: employee_path(employee)) }
@@ -43,7 +42,6 @@ describe "Authentication" do
       context "when followed by logout" do
         before { click_link "Log out" }
         it { should have_link('Log in') }
-        it { should have_xpath('//img[@src="/assets/grey_clock.png"]') }
       end
     end
   end

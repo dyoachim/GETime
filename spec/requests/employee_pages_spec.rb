@@ -29,11 +29,6 @@ describe "Employee pages" do
 
       it "does list each employee" do
         Employee.paginate(page: 1).each do |employee|
-          if employee.clocked_in
-            page.should have_xpath('//img[@src="/assets/green_clock.png"]')
-          else
-            page.should have_xpath('//img[@src="/assets/red_clock.png"]')
-          end
           if employee.active_employee
             page.should have_selector('li', text: employee.name)
           end
