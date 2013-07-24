@@ -1,17 +1,17 @@
 <% content_for :title, @title %>
-<h1>All employees</h1>
+<h1><center>All employees</center></h1>
 
 <div class="employees_container">
   <ul>
     <% @employees.each do |employee| %>
       <% unless employee.active_employee == false %>
-        <li class="span12" id="employees_list">
+        <li class="span4" id="employees_list">
       	  <pre>
       		  <div class="employees_display">
               <% if employee.clocked_in? %>
-                    <%= image_tag("green_clock.png") %>
+                <i class="icon-time icon-large" id="green_clock"></i>
               <% else %>
-                    <%= image_tag("red_clock.png") %>
+                <i class="icon-time icon-large" id="red_clock"></i>
               <% end %>
         		  <%= link_to employee.name, employee %>
         	    <% if current_employee.manager? && !current_employee?(employee) %>

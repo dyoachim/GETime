@@ -82,6 +82,14 @@ h1 {
 	float: right;
 }
 
+#red_clock {
+	color: red;
+}
+
+#green_clock {
+	color: green;
+}
+
 section {
 	-moz-box-sizing:border-box;
 	-webkit-bot-sizing:border-box;

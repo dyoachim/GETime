@@ -8,8 +8,8 @@
             <div class="container">
               <ul class="nav">
                 <% if logged_in? %>
-                  <% if clocked_in? %><li><%= image_tag("green_clock.png") %></li><% else %><li><%= image_tag("red_clock.png") %></li><% end %>
-                  <% else %><li><%= image_tag("grey_clock.png") %></li>
+                  <% if clocked_in? %><li><i class="icon-time icon-2x" id="green_clock"></i></li><% else %><li><i class="icon-time icon-2x" id="red_clock"></i></li><% end %>
+                  <% else %><li><i class="icon-time icon-2x"></i></li>
                 <% end %>
                 <li><%= link_to "Home", root_path %></li>
                 <% if logged_in? %>

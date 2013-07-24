@@ -11,7 +11,7 @@ GEtime::Application.routes.draw do
   match '/edit', to: 'employees#edit'
   match '/timesheets/:id', to: 'timesheets#update'
   match '/timesheets/:id/edit', to: 'timesheets#edit'
-  match '/timesheets/:id/time_change', to: 'timesheets#time_change'
+  match 'timesheets/:id/time_change' => 'timesheets#time_change', :as => "time_change"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

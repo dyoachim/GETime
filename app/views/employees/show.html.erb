@@ -23,12 +23,11 @@
 		<% end %>
 
 		<% if @employee.timesheets.any? && (current_employee?(@employee) || current_employee.manager?) %>	
-		  	<table class="table table-striped">
-		  		<caption><h3>Timesheets (<%= @employee.timesheets.count %>)</h3></caption>
-		  		<tr class="row">
-		  			<td><strong>In</strong></td><td><strong>Out</strong></td><td>Total</td><% if current_employee.manager? %> <td></td> <% end %>
+		  	<table class="table table-striped table-bordered">
+		  		<tbody>
+		  			<tr class="row"><td><strong>In</strong></td><td><strong>Out</strong></td><td>Total</td><% if current_employee.manager? %> <td></td> <% end %></tr>
 		    		<%= render @timesheets %>
-		    	</tr>
+		    	</tbody>
 			</table>
 			<%= will_paginate @timesheets %>
 		<% end %>
